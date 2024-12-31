@@ -7,7 +7,7 @@ export function RenderRoot() {
 
     return (
         <>
-            <button onClick={() => { setColorIndex((colorIndex + 1) % COLORS.length)}}>"Change the color of the box"</button>
+            <button onClick={() => { setColorIndex((colorIndex + 1) % COLORS.length)}}>Change the color of the box</button>
             <ColorBox color={COLORS[colorIndex]} />
         </>)
 }
