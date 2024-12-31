@@ -84,6 +84,7 @@ function Table({ children }: { children: React.ReactNode }) {
 }
 
 const Row1Cell1 = React.memo(function _Row1Cell1() {
+  console.log('Rendering Row1Cell1');
   return (
     <div>
       This row contains a component that is directly dependent on the `color`
