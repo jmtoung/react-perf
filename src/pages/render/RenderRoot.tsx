@@ -4,14 +4,16 @@ const COLORS = ['black', 'red', 'orange', 'yellow', 'green', 'blue'];
 
 export function RenderRoot() {
   return (
-    <Container>
+    <Table>
       <StableChildren />
-    </Container>
+    </Table>
   );
 }
 
-function Container({ children }: { children: React.ReactNode }) {
+function Table({ children }: { children: React.ReactNode }) {
   const [colorIndex, setColorIndex] = useState(0);
+
+  const selectedColor = COLORS[colorIndex];
 
   return (
     <>
@@ -22,14 +24,47 @@ function Container({ children }: { children: React.ReactNode }) {
       >
         Color changer button
       </button>
-      <ColorBox color={COLORS[colorIndex]} />
-      <UnrelatedChild />
-      {children}
+
+      <table>
+        <thead>
+          <tr>
+            <th>Description</th>
+            <th>Component</th>
+          </tr>
+        </thead>
+        <tbody>
+          <TableRow
+            cell1={<div>This is description</div>}
+            cell2={<ColorBox color={selectedColor} />}
+          />
+          {children}
+          <TableRow
+            cell1={<div>This is description3</div>}
+            cell2={<UnrelatedChild />}
+          />
+        </tbody>
+      </table>
     </>
   );
 }
 
+function TableRow({
+  cell1,
+  cell2,
+}: {
+  cell1: React.ReactNode;
+  cell2: React.ReactNode;
+}) {
+  return (
+    <tr>
+      <td>{cell1}</td>
+      <td>{cell2}</td>
+    </tr>
+  );
+}
+
 function ColorBox({ color }: { color: string }) {
+  console.log('Rendering ColorBox with', color);
   return (
     <div style={{ height: 200, width: 200, backgroundColor: color }}>
       My color is controlled by button
@@ -38,6 +73,7 @@ function ColorBox({ color }: { color: string }) {
 }
 
 function UnrelatedChild() {
+  console.log('Rendering UnrelatedChild');
   return (
     <div style={{ height: 200, width: 200, backgroundColor: 'green' }}>
       My color is always green
@@ -46,9 +82,15 @@ function UnrelatedChild() {
 }
 
 function StableChildren() {
+  console.log('Rendering StableChildren');
   return (
-    <div style={{ height: 200, width: 200, backgroundColor: 'blue' }}>
-      My color is always blue
-    </div>
+    <tr>
+      <td>I am passed down via a children prop.</td>
+      <td>
+        <div style={{ height: 200, width: 200, backgroundColor: 'blue' }}>
+          My color is always blue
+        </div>
+      </td>
+    </tr>
   );
 }
