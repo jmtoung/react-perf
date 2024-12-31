@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 const COLORS = ['black', 'red', 'orange', 'yellow', 'green', 'blue'];
 
-export function RenderRoot() {
+export function SimpleRenderExample() {
   return (
     <Table>
       <StableChildren />
@@ -63,19 +63,36 @@ function Table({ children }: { children: React.ReactNode }) {
         </thead>
         <tbody>
           <TableRow
-            cell1={<div>This is description</div>}
+            cell1={Row1Cell1Node}
             cell2={<ColorBox color={selectedColor} />}
           />
-          {children}
           <TableRow
-            cell1={<div>This is description3</div>}
+            cell1={
+              <div>
+                This row contains a component that does not depend on the
+                `color` prop that is controlled by the button.
+              </div>
+            }
             cell2={<UnrelatedChild />}
           />
+          <MemoizedRow />
+          {children}
         </tbody>
       </table>
     </>
   );
 }
+
+const Row1Cell1 = React.memo(function _Row1Cell1() {
+  return (
+    <div>
+      This row contains a component that is directly dependent on the `color`
+      prop that is controlled by the button.
+    </div>
+  );
+});
+
+const Row1Cell1Node = <Row1Cell1 />;
 
 function TableRow({
   cell1,
@@ -95,7 +112,7 @@ function TableRow({
 function ColorBox({ color }: { color: string }) {
   console.log('Rendering ColorBox with', color);
   return (
-    <div style={{ height: 200, width: 200, backgroundColor: color }}>
+    <div style={{ height: 100, width: 200, backgroundColor: color }}>
       My color is controlled by button
     </div>
   );
@@ -104,22 +121,47 @@ function ColorBox({ color }: { color: string }) {
 function UnrelatedChild() {
   console.log('Rendering UnrelatedChild');
   return (
-    <div style={{ height: 200, width: 200, backgroundColor: 'green' }}>
-      My color is always green
+    <div style={{ height: 100, width: 200, backgroundColor: 'green' }}>
+      My color is NOT controlled by button
     </div>
   );
 }
+
+function MemoizedUnrelatedChild() {
+  console.log('Rendering (memoized) UnrelatedChild');
+  return (
+    <div style={{ height: 100, width: 200, backgroundColor: 'yellow' }}>
+      My color is NOT controlled by button
+    </div>
+  );
+}
+
+const MemoizedRow = React.memo(function _MemoizedRow() {
+  console.log('Rendering memoized row');
+  return (
+    <TableRow
+      cell1={
+        <div>
+          This *MEMOIZED* row contains a component that does not depend on the
+          `color` prop that is controlled by the button.
+        </div>
+      }
+      cell2={<MemoizedUnrelatedChild />}
+    />
+  );
+});
 
 function StableChildren() {
   console.log('Rendering StableChildren');
   return (
     <tr>
       <td style={{ border: '1px solid #ddd', padding: '8px' }}>
-        I am passed down via a children prop.
+        This row is passed down via a `children` prop to the table. It does not
+        re-render when the table (parent) re-renders.
       </td>
       <td style={{ border: '1px solid #ddd', padding: '8px' }}>
-        <div style={{ height: 200, width: 200, backgroundColor: 'blue' }}>
-          My color is always blue
+        <div style={{ height: 100, width: 200, backgroundColor: 'blue' }}>
+          `children`
         </div>
       </td>
     </tr>

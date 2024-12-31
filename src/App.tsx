@@ -1,12 +1,12 @@
 import React from 'react';
 import './App.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { RenderRoot } from './pages/render/RenderRoot';
+import { SimpleRenderExample } from './pages/simple-render-example/SimpleRenderExample';
 
 const router = createBrowserRouter([
   {
-    path: '/render',
-    element: <RenderRoot />,
+    path: '/simple-render-example',
+    element: <SimpleRenderExample />,
   },
   {
     path: '/*',
