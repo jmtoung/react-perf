@@ -5,14 +5,14 @@ import { RenderRoot } from './pages/render/RenderRoot';
 
 const router = createBrowserRouter([
   {
-    path: "/render",
-    element: <RenderRoot />
+    path: '/render',
+    element: <RenderRoot />,
   },
   {
-    path: "/*",
-    element: null
-  }
-])
+    path: '/*',
+    element: null,
+  },
+]);
 
 function App() {
   return (
