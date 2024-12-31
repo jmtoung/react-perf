@@ -18,6 +18,19 @@ function Table({ children }: { children: React.ReactNode }) {
   return (
     <>
       <button
+        style={{
+          padding: '10px 20px',
+          fontSize: '16px',
+          backgroundColor: '#4CAF50',
+          color: 'white',
+          border: 'none',
+          borderRadius: '4px',
+          cursor: 'pointer',
+          margin: '10px 0',
+          transition: 'background-color 0.3s ease',
+        }}
+        onMouseOver={e => (e.currentTarget.style.backgroundColor = '#45a049')}
+        onMouseOut={e => (e.currentTarget.style.backgroundColor = '#4CAF50')}
         onClick={() => {
           setColorIndex((colorIndex + 1) % COLORS.length);
         }}
@@ -25,11 +38,27 @@ function Table({ children }: { children: React.ReactNode }) {
         Color changer button
       </button>
 
-      <table>
+      <table style={{ borderCollapse: 'collapse', width: '100%' }}>
         <thead>
           <tr>
-            <th>Description</th>
-            <th>Component</th>
+            <th
+              style={{
+                border: '1px solid #ddd',
+                padding: '8px',
+                textAlign: 'left',
+              }}
+            >
+              Description
+            </th>
+            <th
+              style={{
+                border: '1px solid #ddd',
+                padding: '8px',
+                textAlign: 'left',
+              }}
+            >
+              Component
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -57,8 +86,8 @@ function TableRow({
 }) {
   return (
     <tr>
-      <td>{cell1}</td>
-      <td>{cell2}</td>
+      <td style={{ border: '1px solid #ddd', padding: '8px' }}>{cell1}</td>
+      <td style={{ border: '1px solid #ddd', padding: '8px' }}>{cell2}</td>
     </tr>
   );
 }
@@ -85,8 +114,10 @@ function StableChildren() {
   console.log('Rendering StableChildren');
   return (
     <tr>
-      <td>I am passed down via a children prop.</td>
-      <td>
+      <td style={{ border: '1px solid #ddd', padding: '8px' }}>
+        I am passed down via a children prop.
+      </td>
+      <td style={{ border: '1px solid #ddd', padding: '8px' }}>
         <div style={{ height: 200, width: 200, backgroundColor: 'blue' }}>
           My color is always blue
         </div>
